@@ -52,27 +52,27 @@ function ContactButton({ method, index }: ContactButtonProps) {
 
       <div className="absolute inset-0 glass" aria-hidden="true" />
 
-      <div className="relative z-10 flex items-start gap-4">
+      <div className="contact-card-content relative z-10 flex items-center gap-4 h-full">
         <motion.div
           whileHover={
             method.available && !prefersReducedMotion ? { rotate: 360 } : undefined
           }
           transition={{ duration: 0.6 }}
-          className={`flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${method.gradient} shadow-lg`}
+          className={`contact-card-icon flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${method.gradient} shadow-lg`}
           aria-hidden="true"
         >
           <Icon className="h-7 w-7 text-white" />
         </motion.div>
 
-        <div className="flex-1">
-          <div className="text-sm font-semibold text-light-text-secondary dark:text-dark-text-secondary">
+        <div className="flex-1 min-w-0">
+          <div className="contact-card-label text-sm font-semibold text-light-text-secondary dark:text-dark-text-secondary">
             {method.label}
           </div>
-          <div className="text-lg font-bold text-light-text dark:text-dark-text break-words">
+          <div className="contact-card-value text-lg font-bold text-light-text dark:text-dark-text">
             {method.value}
           </div>
           {method.hint && (
-            <div className="mt-2 text-xs text-light-text-secondary dark:text-dark-text-secondary">
+            <div className="mt-1 text-xs text-light-text-secondary dark:text-dark-text-secondary opacity-75">
               {method.hint}
             </div>
           )}
@@ -83,7 +83,7 @@ function ContactButton({ method, index }: ContactButtonProps) {
                 event.stopPropagation();
                 method.secondaryAction?.onClick();
               }}
-              className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-accent-blue underline-offset-4 transition hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+              className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-accent-blue underline-offset-4 transition hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
               aria-label={method.secondaryAction.ariaLabel}
               title={method.secondaryAction.title}
             >
@@ -118,7 +118,7 @@ function ContactButton({ method, index }: ContactButtonProps) {
           whileTap={
             method.available && !prefersReducedMotion ? { scale: 0.97 } : undefined
           }
-          className={`group relative block w-full overflow-hidden rounded-2xl p-6 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-transparent ${
+          className={`contact-card group relative block w-full overflow-hidden rounded-2xl transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-transparent ${
             method.available ? 'cursor-pointer' : 'cursor-not-allowed opacity-60'
           }`}
           aria-label={method.ariaLabel ?? `Copy ${method.label.toLowerCase()}`}
@@ -143,7 +143,7 @@ function ContactButton({ method, index }: ContactButtonProps) {
           method.available && !prefersReducedMotion ? { scale: 1.05, y: -5 } : undefined
         }
         whileTap={method.available && !prefersReducedMotion ? { scale: 0.97 } : undefined}
-        className={`group relative block w-full overflow-hidden rounded-2xl p-6 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-transparent ${
+        className={`contact-card group relative block w-full overflow-hidden rounded-2xl transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-transparent ${
           method.available ? 'cursor-pointer' : 'cursor-not-allowed opacity-60'
         }`}
         aria-label={method.ariaLabel ?? `Contact via ${method.label}`}
@@ -276,8 +276,8 @@ export default function Contact() {
           </p>
         </motion.div>
 
-        {/* Contact Methods Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16 max-w-5xl mx-auto">
+        {/* Contact Methods Grid - Perfectly Symmetric */}
+        <div className="contact-grid">
           {contactMethods.map((method, index) => (
             <ContactButton key={method.id} method={method} index={index} />
           ))}

@@ -37,10 +37,10 @@ const achievementsData: Achievement[] = [
     organization: 'St. Francis Institute of Technology',
     date: 'October 2023',
     description:
-      'Awarded Consolation Prize at SFIT\'s annual technical symposium for presenting an outstanding project demonstrating technical excellence and innovation.',
+      'Awarded 4th Place at SFIT\'s Colloquium 2023 for presenting an outstanding project demonstrating technical excellence and innovation.',
     icon: Award,
     gradient: 'from-purple-400 via-purple-500 to-pink-500',
-    position: '🎖️ Consolation Prize',
+    position: '🏅 4th Place',
   },
   {
     id: 'vcet-hackathon',
@@ -83,17 +83,12 @@ function AchievementCard({ achievement, index }: AchievementCardProps) {
         type: 'spring',
         stiffness: 100,
       }}
-      className="relative"
+      className="achievement-card-wrapper"
     >
-      {/* Timeline Connector (except for last item) */}
-      {index < achievementsData.length - 1 && (
-        <div className="hidden md:block absolute left-1/2 top-full h-16 w-1 bg-gradient-to-b from-accent-blue/50 to-transparent -translate-x-1/2 z-0" />
-      )}
-
       {/* Card */}
       <motion.div
         whileHover={{ scale: 1.05, y: -5 }}
-        className="relative glass rounded-2xl p-8 overflow-hidden group"
+        className="achievement-card relative glass rounded-2xl overflow-hidden group"
       >
         {/* Background Gradient */}
         <div
@@ -186,8 +181,8 @@ export default function Achievements() {
           </p>
         </motion.div>
 
-        {/* Achievements Timeline */}
-        <div className="max-w-4xl mx-auto space-y-8">
+        {/* Achievements Timeline - Vertical Flowchart */}
+        <div className="achievements-container">
           {achievementsData.map((achievement, index) => (
             <AchievementCard
               key={achievement.id}
