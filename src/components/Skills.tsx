@@ -291,23 +291,21 @@ function SkillCard({ skill, index }: SkillCardProps) {
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      whileHover={{ scale: 1.02, y: -8 }}
-      className="group relative"
+      className="group relative skill-card-container"
     >
-      {/* Main Card */}
-      <div className="glass relative overflow-hidden rounded-xl p-6 transition-all duration-300 hover:shadow-2xl border border-transparent hover:border-opacity-20 hover:border-white">
+      {/* Main Card with Responsive Behavior */}
+      <div className="skill-card glass relative rounded-xl border border-transparent">
         {/* Animated Background Gradient */}
         <div
-          className={`absolute inset-0 bg-gradient-to-br ${colors.gradient} opacity-0 group-hover:opacity-10 transition-all duration-500`}
+          className={`absolute inset-0 bg-gradient-to-br ${colors.gradient} opacity-0 transition-all duration-300`}
         />
 
         {/* Content */}
-        <div className="relative z-10">
+        <div className="relative z-10 p-6">
           {/* Header: Icon + Skill Name */}
           <div className="flex items-center gap-4 mb-4">
             <motion.div 
-              className="p-3 bg-light-bg dark:bg-dark-bg rounded-lg"
-              whileHover={{ rotate: 5, scale: 1.1 }}
+              className="skill-icon p-3 bg-light-bg dark:bg-dark-bg rounded-lg"
               transition={{ duration: 0.2 }}
             >
               <Icon className={`w-6 h-6 ${colors.accent}`} />
@@ -329,26 +327,26 @@ function SkillCard({ skill, index }: SkillCardProps) {
             {skill.projects.map((project, idx) => (
               <span
                 key={idx}
-                className={`text-xs px-3 py-1 rounded-full bg-gradient-to-r ${colors.gradient} text-white font-medium shadow-sm hover:shadow-md transition-shadow duration-200 cursor-pointer`}
+                className={`text-xs px-3 py-1 rounded-full bg-gradient-to-r ${colors.gradient} text-white font-medium shadow-sm transition-shadow duration-200`}
               >
                 {project}
               </span>
             ))}
           </div>
 
-          {/* Hover Details */}
-          <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+          {/* Details Section - Hidden on Desktop, Always Visible on Mobile */}
+          <div className="card-details">
             <div className="border-t border-light-text-secondary/20 dark:border-dark-text-secondary/20 pt-4">
-              <div className="flex items-center gap-2 mb-2">
+              <div className="flex items-center gap-2 mb-3">
                 <ExternalLink className="w-4 h-4 text-accent-blue" />
                 <span className="text-sm font-semibold text-light-text dark:text-dark-text">
                   Key Achievements:
                 </span>
               </div>
-              <ul className="space-y-1">
+              <ul className="space-y-2">
                 {skill.hoverDetails.map((detail, idx) => (
                   <li key={idx} className="text-sm text-light-text-secondary dark:text-dark-text-secondary flex items-start gap-2">
-                    <span className={`w-1.5 h-1.5 rounded-full ${colors.gradient} bg-gradient-to-r mt-2 flex-shrink-0`} />
+                    <span className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${colors.gradient} mt-2 flex-shrink-0`} />
                     {detail}
                   </li>
                 ))}
@@ -358,8 +356,8 @@ function SkillCard({ skill, index }: SkillCardProps) {
         </div>
 
         {/* Glow Effect */}
-        <motion.div
-          className={`absolute -inset-1 bg-gradient-to-r ${colors.glow} rounded-xl blur-lg opacity-0 group-hover:opacity-30 transition-opacity duration-300`}
+        <div
+          className={`skill-glow absolute -inset-1 bg-gradient-to-r ${colors.glow} rounded-xl blur-lg opacity-0 transition-opacity duration-300`}
           style={{ zIndex: -1 }}
         />
       </div>
@@ -419,8 +417,8 @@ export default function Skills() {
                 <div className="h-1 w-24 bg-gradient-to-r from-accent-blue to-accent-cyan rounded-full ml-12 mt-3" />
               </div>
 
-              {/* Skills Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+              {/* Skills Grid - Perfectly Symmetric Responsive Layout */}
+              <div className="skills-grid">
                 {category.skills.map((skill, skillIndex) => (
                   <SkillCard
                     key={skill.name}

@@ -116,3 +116,183 @@
 ::selection {
   @apply bg-accent-blue/30 text-dark-text;
 }
+
+/* ===== RESPONSIVE SKILLS SECTION ===== */
+
+/* Skills Grid - Perfectly Symmetric Layout */
+.skills-grid {
+  display: grid;
+  gap: 2rem;
+  padding: 2.5rem;
+  
+  /* Desktop: 3 columns */
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* Tablet: 2 columns */
+@media (max-width: 1199px) {
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+}
+
+/* Mobile: 1 column, full width */
+@media (max-width: 767px) {
+  .skills-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1rem;
+  }
+}
+
+/* Skill Card Base Styles */
+.skill-card {
+  width: 100%;
+  transition: all 300ms ease-out;
+  overflow: hidden;
+  
+  /* Desktop: Collapsed by default */
+  max-height: 200px;
+}
+
+/* Desktop: Expand on hover */
+@media (min-width: 1200px) {
+  .skill-card:hover {
+    max-height: 500px;
+    transform: scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  }
+  
+  .skill-card:hover .skill-glow {
+    opacity: 0.3;
+  }
+  
+  .skill-card:hover .skill-icon {
+    transform: rotate(5deg) scale(1.1);
+  }
+  
+  .skill-card:hover > div:first-child {
+    opacity: 0.1;
+  }
+}
+
+/* Tablet: Collapsed (similar to desktop) */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .skill-card {
+    max-height: 200px;
+  }
+  
+  .skill-card:hover {
+    max-height: 500px;
+    transform: scale(1.01);
+  }
+  
+  .skill-card:hover .skill-glow {
+    opacity: 0.2;
+  }
+}
+
+/* Mobile: ALWAYS EXPANDED (No interaction needed) */
+@media (max-width: 767px) {
+  .skill-card {
+    /* Always show full content */
+    max-height: none !important;
+    overflow: visible;
+  }
+  
+  /* Disable hover effects on mobile */
+  .skill-card:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+  
+  .skill-card:hover .skill-glow {
+    opacity: 0 !important;
+  }
+}
+
+/* Card Details Visibility */
+.card-details {
+  /* Desktop: Hidden by default */
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 300ms ease-out;
+  margin-top: 0;
+}
+
+/* Desktop: Show on hover */
+@media (min-width: 1200px) {
+  .skill-card:hover .card-details {
+    max-height: 300px;
+    opacity: 1;
+    margin-top: 1rem;
+  }
+}
+
+/* Tablet: Show on hover */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .skill-card:hover .card-details {
+    max-height: 300px;
+    opacity: 1;
+    margin-top: 1rem;
+  }
+}
+
+/* Mobile: ALWAYS show details */
+@media (max-width: 767px) {
+  .card-details {
+    max-height: none !important;
+    opacity: 1 !important;
+    margin-top: 1rem !important;
+    overflow: visible !important;
+  }
+}
+
+/* Smooth icon animations */
+.skill-icon {
+  transition: all 200ms ease-out;
+}
+
+/* Glow effect */
+.skill-glow {
+  transition: opacity 300ms ease-out;
+}
+
+/* Ensure cards maintain equal height in grid */
+.skill-card-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.skill-card-container .skill-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Mobile-specific improvements */
+@media (max-width: 767px) {
+  .skill-card-container {
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Ensure text is readable on mobile */
+  .skill-card h3 {
+    font-size: 1.125rem;
+    line-height: 1.4;
+  }
+  
+  .skill-card p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  
+  .skill-card .card-details li {
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+}
