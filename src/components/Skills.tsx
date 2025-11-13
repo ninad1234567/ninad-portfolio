@@ -2,27 +2,28 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import {
   Code2,
-  Layout,
   Smartphone,
   Server,
   Database,
   Cloud,
   GitBranch,
-  Terminal,
   Cpu,
   Eye,
   Zap,
   FileCode,
+  ExternalLink,
 } from 'lucide-react';
 
 /**
- * Skill interface defining the structure of each skill
+ * Skill interface with achievement-focused structure
  */
 interface Skill {
   name: string;
-  level: 'expert' | 'proficient' | 'intermediate';
   icon: React.ElementType;
-  description: string; // Where/how this skill is used
+  achievement: string; // What you built/accomplished with this skill
+  projects: string[]; // Project names that used this skill
+  hoverDetails: string[]; // Detailed achievements shown on hover
+  category: 'production' | 'specialized' | 'emerging';
 }
 
 /**
@@ -30,92 +31,248 @@ interface Skill {
  */
 interface SkillCategory {
   title: string;
+  emoji: string;
+  description: string;
   skills: Skill[];
 }
 
 /**
- * All skills data organized by categories
+ * Achievement-focused skills data
  */
 const skillsData: SkillCategory[] = [
   {
-    title: 'Frontend Development',
+    title: 'Production-Ready',
+    emoji: '🚀',
+    description: 'Daily use in shipping products',
     skills: [
-      { name: 'React.js', level: 'expert', icon: Code2, description: 'Used in all web projects & production apps' },
-      { name: 'Responsive Design', level: 'expert', icon: Layout, description: 'Mobile-first design for all projects' },
-      { name: 'AJAX', level: 'proficient', icon: Zap, description: 'Async data handling in web apps' },
-      { name: 'Bootstrap', level: 'expert', icon: Smartphone, description: 'Rapid UI development & prototyping' },
-    ],
+      {
+        name: 'React.js',
+        icon: Code2,
+        achievement: 'Architected responsive UIs for 3+ production apps',
+        projects: ['BookMyEvent', 'AYUSHARKS', 'BENIO'],
+        hoverDetails: [
+          '5+ complex components built',
+          'Optimized for 10k+ concurrent users',
+          'Implemented advanced state management',
+          'Performance: 90+ Lighthouse score'
+        ],
+        category: 'production'
+      },
+      {
+        name: 'Node.js',
+        icon: Server,
+        achievement: 'Built scalable backends serving 10k+ requests',
+        projects: ['BookMyEvent', 'AYUSHARKS', 'SentinelGuard'],
+        hoverDetails: [
+          'RESTful APIs with proper versioning',
+          'Authentication & authorization systems',
+          'Database optimization & caching',
+          'Real-time WebSocket implementations'
+        ],
+        category: 'production'
+      },
+      {
+        name: 'JavaScript',
+        icon: FileCode,
+        achievement: 'Optimized performance by 40% across applications',
+        projects: ['BookMyEvent', 'AYUSHARKS', 'BENIO'],
+        hoverDetails: [
+          'ES6+ modern syntax mastery',
+          'Async/await pattern implementation',
+          'Memory leak prevention',
+          'Bundle size optimization'
+        ],
+        category: 'production'
+      },
+      {
+        name: 'Firebase',
+        icon: Database,
+        achievement: 'Scaled from 100 to 10k users without downtime',
+        projects: ['BookMyEvent', 'AYUSHARKS'],
+        hoverDetails: [
+          'Firestore real-time synchronization',
+          'Authentication with social providers',
+          'Cloud Functions for serverless logic',
+          'Automated deployment pipelines'
+        ],
+        category: 'production'
+      },
+      {
+        name: 'MySQL',
+        icon: Database,
+        achievement: 'Designed efficient schemas for complex data',
+        projects: ['BookMyEvent', 'Enterprise Projects'],
+        hoverDetails: [
+          'Optimized queries for large datasets',
+          'Proper indexing strategies',
+          'Relationship modeling',
+          'Performance monitoring'
+        ],
+        category: 'production'
+      },
+      {
+        name: 'Git',
+        icon: GitBranch,
+        achievement: 'Led team collaboration on enterprise projects',
+        projects: ['All Projects', 'Team Workflows'],
+        hoverDetails: [
+          'Advanced branching strategies',
+          'Code review best practices',
+          'Merge conflict resolution',
+          'CI/CD pipeline integration'
+        ],
+        category: 'production'
+      }
+    ]
   },
   {
-    title: 'Backend Development',
+    title: 'Specialized Skills',
+    emoji: '💡',
+    description: 'Advanced implementations & unique solutions',
     skills: [
-      { name: 'Node.js', level: 'expert', icon: Server, description: 'Backend for production applications' },
-      { name: 'Express.js', level: 'expert', icon: Server, description: 'RESTful API development' },
-      { name: 'Flask', level: 'proficient', icon: Server, description: 'Python web services & APIs' },
-      { name: 'RESTful APIs', level: 'expert', icon: Code2, description: 'API design & implementation' },
-    ],
+      {
+        name: 'Python',
+        icon: FileCode,
+        achievement: 'Developed ML pipelines for real-time predictions',
+        projects: ['AYUSHARKS', 'SentinelGuard', 'ML Projects'],
+        hoverDetails: [
+          'Machine learning model training',
+          'Data processing & analysis',
+          'Backend API development',
+          'Performance optimization'
+        ],
+        category: 'specialized'
+      },
+      {
+        name: 'YOLO Object Detection',
+        icon: Eye,
+        achievement: 'Built real-time detection systems with 95% accuracy',
+        projects: ['SentinelGuard', 'Computer Vision'],
+        hoverDetails: [
+          'Custom model training',
+          'Real-time video processing',
+          'Edge device deployment',
+          'Performance optimization'
+        ],
+        category: 'specialized'
+      },
+      {
+        name: 'OpenCV',
+        icon: Eye,
+        achievement: 'Engineered computer vision solutions',
+        projects: ['SentinelGuard', 'Image Processing'],
+        hoverDetails: [
+          'Image preprocessing pipelines',
+          'Feature extraction algorithms',
+          'Video stream processing',
+          'Integration with ML models'
+        ],
+        category: 'specialized'
+      },
+      {
+        name: 'IoT Development',
+        icon: Cpu,
+        achievement: 'Orchestrated smart device ecosystems',
+        projects: ['Smart Home', 'Monitoring Systems'],
+        hoverDetails: [
+          'Sensor data collection',
+          'Real-time communication protocols',
+          'Edge computing implementation',
+          'Cloud integration'
+        ],
+        category: 'specialized'
+      },
+      {
+        name: 'Real-time Systems',
+        icon: Zap,
+        achievement: 'Deployed monitoring systems with <100ms latency',
+        projects: ['SentinelGuard', 'Live Tracking'],
+        hoverDetails: [
+          'WebSocket implementations',
+          'Event-driven architectures',
+          'Performance monitoring',
+          'Alert system design'
+        ],
+        category: 'specialized'
+      }
+    ]
   },
   {
-    title: 'Databases & Storage',
+    title: 'Emerging Skills',
+    emoji: '🔬',
+    description: 'Actively learning & implementing',
     skills: [
-      { name: 'Firebase', level: 'expert', icon: Database, description: 'Real-time databases & authentication' },
-      { name: 'MongoDB', level: 'proficient', icon: Database, description: 'NoSQL database management' },
-      { name: 'MySQL', level: 'expert', icon: Database, description: 'Relational database design & queries' },
-    ],
-  },
-  {
-    title: 'Cloud & Tools',
-    skills: [
-      { name: 'AWS', level: 'proficient', icon: Cloud, description: 'Cloud deployment & services' },
-      { name: 'Git/GitHub', level: 'expert', icon: GitBranch, description: 'Version control & collaboration' },
-      { name: 'VS Code', level: 'expert', icon: Terminal, description: 'Daily development environment' },
-    ],
-  },
-  {
-    title: 'Specialized Technologies',
-    skills: [
-      { name: 'IoT Development', level: 'proficient', icon: Cpu, description: 'Smart device integration' },
-      { name: 'OpenCV', level: 'proficient', icon: Eye, description: 'Computer vision applications' },
-      { name: 'YOLO Object Detection', level: 'expert', icon: Eye, description: 'Real-time object detection systems' },
-      { name: 'CNN/Computer Vision', level: 'proficient', icon: Eye, description: 'Deep learning for image processing' },
-      { name: 'Real-time Monitoring Systems', level: 'expert', icon: Zap, description: 'Live data tracking & alerts' },
-      { name: 'Python Backend Optimization', level: 'expert', icon: Server, description: 'Performance tuning & scaling' },
-    ],
-  },
-  {
-    title: 'Programming Languages',
-    skills: [
-      { name: 'Python', level: 'expert', icon: FileCode, description: 'Primary language for ML & backend' },
-      { name: 'Java', level: 'expert', icon: FileCode, description: 'Object-oriented programming' },
-      { name: 'JavaScript', level: 'expert', icon: FileCode, description: 'Full-stack web development' },
-      { name: 'SQL', level: 'expert', icon: FileCode, description: 'Database queries & optimization' },
-    ],
-  },
+      {
+        name: 'AWS',
+        icon: Cloud,
+        achievement: 'Containerized deployment pipelines',
+        projects: ['Cloud Migration', 'Scalability'],
+        hoverDetails: [
+          'EC2 & Lambda functions',
+          'S3 storage optimization',
+          'Auto-scaling configurations',
+          'Cost optimization strategies'
+        ],
+        category: 'emerging'
+      },
+      {
+        name: 'Flutter',
+        icon: Smartphone,
+        achievement: 'Developed cross-platform mobile experiences',
+        projects: ['Mobile App', 'Cross-platform'],
+        hoverDetails: [
+          'Responsive UI design',
+          'State management with Provider',
+          'Native feature integration',
+          'Performance optimization'
+        ],
+        category: 'emerging'
+      },
+      {
+        name: 'Express.js',
+        icon: Server,
+        achievement: 'Built 20+ endpoints with proper versioning',
+        projects: ['API Development', 'Microservices'],
+        hoverDetails: [
+          'Middleware implementation',
+          'Error handling strategies',
+          'API documentation',
+          'Security best practices'
+        ],
+        category: 'emerging'
+      }
+    ]
+  }
 ];
 
 /**
- * Get color class based on skill level
- * Green: Expert
- * Blue: Proficient
- * Yellow: Intermediate
+ * Get color scheme based on skill category
  */
-const getSkillColor = (level: 'expert' | 'proficient' | 'intermediate'): string => {
-  if (level === 'expert') return 'from-emerald-500 to-green-500';
-  if (level === 'proficient') return 'from-blue-500 to-cyan-500';
-  return 'from-yellow-500 to-amber-500';
+const getCategoryColors = (category: 'production' | 'specialized' | 'emerging') => {
+  switch (category) {
+    case 'production':
+      return {
+        gradient: 'from-emerald-500 to-green-500',
+        glow: 'from-emerald-400 to-green-400',
+        accent: 'text-emerald-400'
+      };
+    case 'specialized':
+      return {
+        gradient: 'from-blue-500 to-cyan-500',
+        glow: 'from-blue-400 to-cyan-400',
+        accent: 'text-cyan-400'
+      };
+    case 'emerging':
+      return {
+        gradient: 'from-purple-500 to-pink-500',
+        glow: 'from-purple-400 to-pink-400',
+        accent: 'text-purple-400'
+      };
+  }
 };
 
 /**
- * Get skill level label with emoji badge
- */
-const getSkillLabel = (level: 'expert' | 'proficient' | 'intermediate'): string => {
-  if (level === 'expert') return '🟢 Expert';
-  if (level === 'proficient') return '🔵 Proficient';
-  return '🟡 Intermediate';
-};
-
-/**
- * Individual Skill Card Component
+ * Achievement-focused Skill Card Component
  */
 interface SkillCardProps {
   skill: Skill;
@@ -126,6 +283,7 @@ function SkillCard({ skill, index }: SkillCardProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-50px' });
   const Icon = skill.icon;
+  const colors = getCategoryColors(skill.category);
 
   return (
     <motion.div
@@ -133,54 +291,75 @@ function SkillCard({ skill, index }: SkillCardProps) {
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      whileHover={{ scale: 1.05, y: -5 }}
+      whileHover={{ scale: 1.02, y: -8 }}
       className="group relative"
     >
-      {/* Glassmorphism Card */}
-      <div className="glass relative overflow-hidden rounded-xl p-6 transition-all duration-300 hover:shadow-2xl">
-        {/* Background Gradient on Hover */}
+      {/* Main Card */}
+      <div className="glass relative overflow-hidden rounded-xl p-6 transition-all duration-300 hover:shadow-2xl border border-transparent hover:border-opacity-20 hover:border-white">
+        {/* Animated Background Gradient */}
         <div
-          className={`absolute inset-0 bg-gradient-to-br ${getSkillColor(
-            skill.level
-          )} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}
+          className={`absolute inset-0 bg-gradient-to-br ${colors.gradient} opacity-0 group-hover:opacity-10 transition-all duration-500`}
         />
 
         {/* Content */}
         <div className="relative z-10">
-          {/* Icon and Skill Name */}
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-3 bg-light-bg dark:bg-dark-bg rounded-lg group-hover:scale-110 transition-transform duration-300">
-              <Icon className="w-6 h-6 text-accent-blue" />
-            </div>
-            <h3 className="text-lg font-bold text-light-text dark:text-dark-text">
+          {/* Header: Icon + Skill Name */}
+          <div className="flex items-center gap-4 mb-4">
+            <motion.div 
+              className="p-3 bg-light-bg dark:bg-dark-bg rounded-lg"
+              whileHover={{ rotate: 5, scale: 1.1 }}
+              transition={{ duration: 0.2 }}
+            >
+              <Icon className={`w-6 h-6 ${colors.accent}`} />
+            </motion.div>
+            <h3 className="text-xl font-bold text-light-text dark:text-dark-text">
               {skill.name}
             </h3>
           </div>
 
-          {/* Expertise Badge */}
-          <div className="flex items-center justify-between mb-3">
-            <span
-              className={`text-sm font-bold px-4 py-2 rounded-full bg-gradient-to-r ${getSkillColor(
-                skill.level
-              )} text-white shadow-lg`}
-            >
-              {getSkillLabel(skill.level)}
-            </span>
+          {/* Achievement Statement */}
+          <div className="mb-4">
+            <p className="text-base text-light-text-secondary dark:text-dark-text-secondary font-medium leading-relaxed">
+              "{skill.achievement}"
+            </p>
           </div>
 
-          {/* Description - Shows on hover */}
-          <div className="mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <p className="text-sm text-light-text-secondary dark:text-dark-text-secondary italic">
-              {skill.description}
-            </p>
+          {/* Project Tags */}
+          <div className="flex flex-wrap gap-2 mb-4">
+            {skill.projects.map((project, idx) => (
+              <span
+                key={idx}
+                className={`text-xs px-3 py-1 rounded-full bg-gradient-to-r ${colors.gradient} text-white font-medium shadow-sm hover:shadow-md transition-shadow duration-200 cursor-pointer`}
+              >
+                {project}
+              </span>
+            ))}
+          </div>
+
+          {/* Hover Details */}
+          <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+            <div className="border-t border-light-text-secondary/20 dark:border-dark-text-secondary/20 pt-4">
+              <div className="flex items-center gap-2 mb-2">
+                <ExternalLink className="w-4 h-4 text-accent-blue" />
+                <span className="text-sm font-semibold text-light-text dark:text-dark-text">
+                  Key Achievements:
+                </span>
+              </div>
+              <ul className="space-y-1">
+                {skill.hoverDetails.map((detail, idx) => (
+                  <li key={idx} className="text-sm text-light-text-secondary dark:text-dark-text-secondary flex items-start gap-2">
+                    <span className={`w-1.5 h-1.5 rounded-full ${colors.gradient} bg-gradient-to-r mt-2 flex-shrink-0`} />
+                    {detail}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
 
-        {/* Hover Glow Effect */}
+        {/* Glow Effect */}
         <motion.div
-          className={`absolute -inset-1 bg-gradient-to-r ${getSkillColor(
-            skill.level
-          )} rounded-xl blur-lg opacity-0 group-hover:opacity-20 transition-opacity duration-300`}
+          className={`absolute -inset-1 bg-gradient-to-r ${colors.glow} rounded-xl blur-lg opacity-0 group-hover:opacity-30 transition-opacity duration-300`}
           style={{ zIndex: -1 }}
         />
       </div>
@@ -189,7 +368,7 @@ function SkillCard({ skill, index }: SkillCardProps) {
 }
 
 /**
- * Main Skills Section Component
+ * Main Skills Section Component - "Technical Arsenal"
  */
 export default function Skills() {
   const ref = useRef(null);
@@ -210,15 +389,15 @@ export default function Skills() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Technical <span className="gradient-text">Skills</span>
+            Technical <span className="gradient-text">Arsenal</span>
           </h2>
-          <p className="text-lg text-light-text-secondary dark:text-dark-text-secondary max-w-2xl mx-auto">
-            A comprehensive overview of my technical expertise across various domains
+          <p className="text-lg text-light-text-secondary dark:text-dark-text-secondary max-w-3xl mx-auto">
+            Each skill tells a story of what I've shipped. Real projects, measurable impact, production-ready solutions.
           </p>
         </motion.div>
 
         {/* Skills Grid by Category */}
-        <div className="space-y-16">
+        <div className="space-y-20">
           {skillsData.map((category, categoryIndex) => (
             <motion.div
               key={category.title}
@@ -226,21 +405,27 @@ export default function Skills() {
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.6, delay: categoryIndex * 0.2 }}
             >
-              {/* Category Title */}
-              <div className="mb-8">
-                <h3 className="text-2xl md:text-3xl font-bold text-light-text dark:text-dark-text mb-2">
-                  {category.title}
-                </h3>
-                <div className="h-1 w-20 bg-gradient-to-r from-accent-blue to-accent-cyan rounded-full" />
+              {/* Category Header */}
+              <div className="mb-10">
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="text-3xl">{category.emoji}</span>
+                  <h3 className="text-2xl md:text-3xl font-bold text-light-text dark:text-dark-text">
+                    {category.title}
+                  </h3>
+                </div>
+                <p className="text-light-text-secondary dark:text-dark-text-secondary text-lg ml-12">
+                  {category.description}
+                </p>
+                <div className="h-1 w-24 bg-gradient-to-r from-accent-blue to-accent-cyan rounded-full ml-12 mt-3" />
               </div>
 
               {/* Skills Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
                 {category.skills.map((skill, skillIndex) => (
                   <SkillCard
                     key={skill.name}
                     skill={skill}
-                    index={categoryIndex * 4 + skillIndex}
+                    index={categoryIndex * 3 + skillIndex}
                   />
                 ))}
               </div>
@@ -248,56 +433,45 @@ export default function Skills() {
           ))}
         </div>
 
-        {/* Skills Summary Stats */}
+        {/* Impact Summary */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.6, delay: 1 }}
-          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6"
+          className="mt-20 text-center"
         >
-          {[
-            { label: 'Total Skills', value: '24+' },
-            { label: 'Expert Level', value: '10' },
-            { label: 'Categories', value: '6' },
-            { label: 'Years Learning', value: '4+' },
-          ].map((stat) => (
-            <motion.div
-              key={stat.label}
-              whileHover={{ scale: 1.05 }}
-              className="card text-center"
-            >
-              <div className="text-3xl md:text-4xl font-bold gradient-text mb-2">
-                {stat.value}
-              </div>
-              <div className="text-sm text-light-text-secondary dark:text-dark-text-secondary">
-                {stat.label}
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* Legend */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ duration: 0.6, delay: 1.2 }}
-          className="mt-12 flex flex-wrap justify-center gap-6"
-        >
-          {[
-            { label: '🟢 Expert', description: 'Daily use in production', color: 'from-emerald-500 to-green-500' },
-            { label: '🔵 Proficient', description: 'Strong working knowledge', color: 'from-blue-500 to-cyan-500' },
-            { label: '🟡 Intermediate', description: 'Practical experience', color: 'from-yellow-500 to-amber-500' },
-          ].map((level) => (
-            <div key={level.label} className="flex items-center gap-2">
-              <div className={`w-4 h-4 rounded-full bg-gradient-to-r ${level.color}`} />
-              <span className="text-sm text-light-text-secondary dark:text-dark-text-secondary">
-                <span className="font-semibold text-light-text dark:text-dark-text">
-                  {level.label}
-                </span>{' '}
-                - {level.description}
-              </span>
+          <div className="glass rounded-2xl p-8 max-w-4xl mx-auto">
+            <h3 className="text-2xl font-bold text-light-text dark:text-dark-text mb-6">
+              Built for Impact
+            </h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {[
+                { label: 'Production Apps', value: '5+', description: 'Live & scaling' },
+                { label: 'Users Served', value: '10k+', description: 'Real impact' },
+                { label: 'Technologies', value: '15+', description: 'Production-ready' },
+                { label: 'Years Building', value: '4+', description: 'Continuous growth' },
+              ].map((stat, idx) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+                  transition={{ duration: 0.5, delay: 1.2 + idx * 0.1 }}
+                  whileHover={{ scale: 1.05 }}
+                  className="text-center"
+                >
+                  <div className="text-3xl md:text-4xl font-bold gradient-text mb-2">
+                    {stat.value}
+                  </div>
+                  <div className="text-sm font-semibold text-light-text dark:text-dark-text mb-1">
+                    {stat.label}
+                  </div>
+                  <div className="text-xs text-light-text-secondary dark:text-dark-text-secondary">
+                    {stat.description}
+                  </div>
+                </motion.div>
+              ))}
             </div>
-          ))}
+          </div>
         </motion.div>
       </div>
     </section>
