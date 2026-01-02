@@ -442,10 +442,9 @@ export default function Skills() {
             <h3 className="text-2xl font-bold text-light-text dark:text-dark-text mb-6">
               Built for Impact
             </h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
                 { label: 'Production Apps', value: '5+', description: 'Live & scaling' },
-                { label: 'Users Served', value: '10k+', description: 'Real impact' },
                 { label: 'Technologies', value: '15+', description: 'Production-ready' },
                 { label: 'Years Building', value: '4+', description: 'Continuous growth' },
               ].map((stat, idx) => (
